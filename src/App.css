@@ -1,38 +1,46 @@
-.App {
+App.css
+
+/* General styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Header styles */
+.header {
+  background-color: #49478c;
+  color: white;
+  padding: 10px 20px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Sidebar styles */
+.sidebar {
+  height: 100vh; /* Full height */
+  width: 250px; /* Sidebar width */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #130756; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.sidebar a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.sidebar a:hover {
+  color: #f1f1f1;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Style page content */
+.main-content {
+  margin-left: 250px; /* Same as the width of the sidebar */
+  padding: 20px;
 }
