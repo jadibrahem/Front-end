@@ -1,60 +1,41 @@
-// // App.js
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import EmployeeList from './components/EmployeeList';
-// import './App.css'; // Ensure you have this CSS import for styles
+import React, { useState } from 'react';
+import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Sidebar from './components/sidebar.jsx';
+import Dashboard from './pages/dashboard.jsx';
+import EmployeeList from './pages/employeelist.jsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import LeaveDetailsPage from './pages/leaves.jsx';
+import EmployeeDetails from './pages/employeedetail.jsx';
+import LeaveRequestForm from './pages/LeaveRequestForm.jsx'; // Import your LeaveRequestForm
+import LeaveRequestsList from './pages/leave-requests';
+import LeaveRequestDetails from './pages/LeaveRequestDetails.jsx';
+import AttendancePage from './pages/AttendancePage';
+import AttendanceDashboard from './pages/AttendanceDashboard';
+const App = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const sidebarWidth = sidebarOpen ? '200px' : '0px'; // Adjust this value based on your sidebar's width
 
-// const Header = () => {
-//   return <div className="header">Company Header</div>;
-// };
-
-// const Sidebar = () => {
-//   return (
-//     <div className="sidebar">
-//       <a href="#home">Home</a>
-//       <a href="#employees">Employees</a>
-//       <a href="#departments">Departments</a>
-//       <a href="#reports">Reports</a>
-//       {/* Add more links as needed */}
-//     </div>
-//   );
-// };
-
-// function App() {
-//   const [employees, setEmployees] = useState([]);
-
-//   useEffect(() => {
-//     axios.get('http://127.0.0.1:8000/employee/')
-//       .then(response => {
-//         setEmployees(response.data);
-//       })
-//       .catch(error => console.error('Error fetching data: ', error));
-//   }, []);
-
-//   return (
-//     <div>
-//       <Header />
-//       <Sidebar />
-//       <div className="main-content">
-//         <h1>Employee Directory</h1>
-//         <EmployeeList employees={employees} />
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default App;
-// App.js or your page component
-import React from 'react';
-import LeaveRequestForm from './LeaveRequestForm';
-import './LeaveRequestForm';
-function App() {
   return (
-    <div className="App">
-      <h1>Leave Request Form</h1>
-      <LeaveRequestForm />
-    </div>
+    <BrowserRouter>
+      <Sidebar isOpen={sidebarOpen} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+      <div style={{ marginLeft: sidebarWidth, transition: 'margin-left .5s',  }}>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/employeelist" element={<EmployeeList />} />
+          <Route path="/leaves" element={<LeaveDetailsPage />} />
+          {/* For EmployeeDetails, you will need a parameterized route */}
+          <Route path="/employeedetail/:employeeId" element={<EmployeeDetails />} />
+          <Route path="/leave-request" element={<LeaveRequestForm />} /> {/* Add this line */}
+          <Route path="/leave-requests" element={<LeaveRequestsList />} />
+          <Route path="/leave-requests/:id" element={<LeaveRequestDetails />} />
+          <Route path="/attendance" element={<AttendancePage />} /> {/* Attendance page route */}
+          <Route path="/attendance-dash" element={<AttendanceDashboard />} /> {/* Attendance page route */}
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

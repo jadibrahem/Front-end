@@ -1,46 +1,55 @@
-App.css
-
-/* General styles */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
-
-/* Header styles */
-.header {
-  background-color: #49478c;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-}
-
-/* Sidebar styles */
-.sidebar {
-  height: 100vh; /* Full height */
-  width: 250px; /* Sidebar width */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
-  left: 0;
-  background-color: #130756; /* Black */
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
-}
-
-.sidebar a {
-  padding: 6px 8px 6px 16px;
+*{
+  margin:0;
+  padding:0;
   text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
 }
-
-.sidebar a:hover {
-  color: #f1f1f1;
+.container{
+  display:flex;
 }
-
-/* Style page content */
-.main-content {
-  margin-left: 250px; /* Same as the width of the sidebar */
+main{
+  width: 100%;
   padding: 20px;
+}
+.sidebar{
+  background: rgb(23, 20, 85);
+  color: #fff;
+  height: 100vh;
+  width: 200px;
+  transition: all 0.5s; 
+  position: fixed; /* Position it fixed to the viewport */
+  left: 0; /* Align to the left */
+  
+
+}
+.top_section{
+  display: flex;
+  align-items:center;
+  padding:20px 15px;
+}
+.logo{
+  font-size: 30px;
+}
+.bars{
+  display: flex;
+  font-size: 25px;
+  margin-left: 50px;
+}
+.link{
+  display: flex;
+  color: #fff;
+  padding: 10px 15px;
+  gap: 15px;
+  transition: all 0.5s;
+}
+.link:hover{
+  background:lightskyblue;
+  color: #000;
+  transition: all 0.5s;
+}
+.active{
+  background: lightskyblue;
+  color: #000;
+}
+.icon, .link_text{
+  font-size: 20px;
 }
