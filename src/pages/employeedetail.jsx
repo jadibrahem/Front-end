@@ -7,41 +7,33 @@ const EmployeeDetails = () => {
     const [employee, setEmployee] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { employeeId } = useParams(); 
+    const { EmployeeID } = useParams(); 
 
     useEffect(() => {
         setIsLoading(true);
-        const apiUrl = `http://127.0.0.1:8000/employee/${employeeId}`;
-        console.log('API URL:', apiUrl);
-        
-        axios.get(apiUrl)
+        axios.get(`http://127.0.0.1:8000/employee/${EmployeeID}`)
             .then(response => {
                 setEmployee(response.data);
             })
             .catch(err => {
-                console.error('Error fetching employee details:', err);
-                setError(err);
+                setError(`Error fetching employee details: ${err.message || 'unknown error'}`);
             })
             .finally(() => {
                 setIsLoading(false);
             });
-    }, [employeeId]);
+    }, [EmployeeID]);
 
     if (isLoading) {
         return (
             <div className="text-center">
-                <Spinner color="primary" />
+                <Spinner />
                 <p>Loading employee details...</p>
             </div>
         );
     }
 
     if (error) {
-        return (
-            <Alert color="danger">
-                Error loading employee details: {error.response ? error.response.data : 'A network error occurred'}
-            </Alert>
-        );
+        return <Alert color="danger">{error}</Alert>;
     }
 
     if (!employee) {

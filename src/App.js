@@ -12,6 +12,11 @@ import LeaveRequestsList from './pages/leave-requests';
 import LeaveRequestDetails from './pages/LeaveRequestDetails.jsx';
 import AttendancePage from './pages/AttendancePage';
 import AttendanceDashboard from './pages/AttendanceDashboard';
+import FormSelectionPage from './pages/FormSelectionPage.jsx';
+import EmployeeByNum from './pages/EmployeeByNum.jsx';
+import InsuranceNumberInputPage from './pages/InsuranceNumberInputPage'; 
+import LeavePdf from './pages/LeavePdf.jsx'; 
+import EmployeeLeaveInfo from './pages/EmployeeLeaveInfo.jsx';
 const App = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const sidebarWidth = sidebarOpen ? '200px' : '0px'; // Adjust this value based on your sidebar's width
@@ -21,17 +26,22 @@ const App = () => {
       <Sidebar isOpen={sidebarOpen} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
       <div style={{ marginLeft: sidebarWidth, transition: 'margin-left .5s',  }}>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<FormSelectionPage />} />
+          <Route path="/dash" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/employeelist" element={<EmployeeList />} />
           <Route path="/leaves" element={<LeaveDetailsPage />} />
           {/* For EmployeeDetails, you will need a parameterized route */}
-          <Route path="/employeedetail/:employeeId" element={<EmployeeDetails />} />
+          <Route path="/employee/:EmployeeID" element={<EmployeeDetails />} />
+          <Route path="/EmployeeByNum/:insuranceNumber" element={<EmployeeByNum />} />
           <Route path="/leave-request" element={<LeaveRequestForm />} /> {/* Add this line */}
           <Route path="/leave-requests" element={<LeaveRequestsList />} />
           <Route path="/leave-requests/:id" element={<LeaveRequestDetails />} />
           <Route path="/attendance" element={<AttendancePage />} /> {/* Attendance page route */}
           <Route path="/attendance-dash" element={<AttendanceDashboard />} /> {/* Attendance page route */}
+          <Route path="/InsuranceNumberInputPage" element={<InsuranceNumberInputPage />} /> {/* Attendance page route */}
+          <Route path="/employee/:insuranceNumber/leaves" element={<EmployeeLeaveInfo />} />
+          <Route path="/leavepdf/:leaveId" element={<LeavePdf />} />
         </Routes>
       </div>
     </BrowserRouter>

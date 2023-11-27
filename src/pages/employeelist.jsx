@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, CardHeader, CardBody, Table ,Alert,Spinner, Input, InputGroup, Button } from 'reactstrap';
-
-import moment from 'moment'; // Ensure moment is installed
+import { Card, CardHeader, CardBody, Table, Alert, Spinner, Input, InputGroup, Button } from 'reactstrap';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 const EmployeeList = () => {
@@ -42,7 +41,8 @@ const EmployeeList = () => {
         <h3 className="mb-0">Employees List</h3>
       </CardHeader>
       <CardBody>
-      <div className="mb-3">
+        {/* Search and Filter Inputs (Currently non-functional placeholders) */}
+        <div className="mb-3">
           <InputGroup>
             <Input placeholder="Search employees..." />
             <Button color="secondary">Search</Button>
@@ -81,7 +81,7 @@ const EmployeeList = () => {
                 <tr key={employee.EmployeeID}>
                   <td>{employee.EmployeeID}</td>
                   <td>
-                    <Link to={`/employeedetail/${employee.EmployeeID}`}>
+                    <Link to={`/employee/${employee.EmployeeID}`}>
                       {employee.FirstName} {employee.LastName}
                     </Link>
                   </td>
