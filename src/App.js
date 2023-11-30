@@ -17,6 +17,8 @@ import EmployeeByNum from './pages/EmployeeByNum.jsx';
 import InsuranceNumberInputPage from './pages/InsuranceNumberInputPage'; 
 import LeavePdf from './pages/LeavePdf.jsx'; 
 import EmployeeLeaveInfo from './pages/EmployeeLeaveInfo.jsx';
+import Login from './pages/Login.jsx'
+import { ProtectedRoute } from './components/ProtectedRoute.js';
 const App = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const sidebarWidth = sidebarOpen ? '200px' : '0px'; // Adjust this value based on your sidebar's width
@@ -27,7 +29,8 @@ const App = () => {
       <div style={{ marginLeft: sidebarWidth, transition: 'margin-left .5s',  }}>
         <Routes>
           <Route path="/" element={<FormSelectionPage />} />
-          <Route path="/dash" element={<Dashboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dash"   element={<ProtectedRoute component={Dashboard} />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/employeelist" element={<EmployeeList />} />
           <Route path="/leaves" element={<LeaveDetailsPage />} />

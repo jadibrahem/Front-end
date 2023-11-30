@@ -4,6 +4,7 @@ import { List, ListItem, ListItemText, Badge, Container, Typography, Paper, Butt
 import moment from 'moment';
 import { Link, useNavigate } from 'react-router-dom';
 
+
 const LeaveRequestsList = () => {
     const [leaveRequests, setLeaveRequests] = useState([]);
     const navigate = useNavigate();
@@ -52,7 +53,7 @@ const LeaveRequestsList = () => {
                                 }
                                 secondary={`Leave Type: ${leave.LeaveType} - Days: ${calculateDays(leave.StartDate, leave.EndDate)} - Reason: ${leave.Reason}`}
                             />
-                            <Badge badgeContent={leave.Status} color={getStatusBadge(leave.Status)} />
+                            <Badge badgeContent={leave.Status} color={getStatusBadge(leave.Status) } />
                             <Button variant="contained" color="primary" onClick={() => handleViewDetails(leave.id)}>
                                 View Details
                             </Button>
