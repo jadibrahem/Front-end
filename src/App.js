@@ -19,6 +19,7 @@ import LeavePdf from './pages/LeavePdf.jsx';
 import EmployeeLeaveInfo from './pages/EmployeeLeaveInfo.jsx';
 import Login from './pages/Login.jsx'
 import { ProtectedRoute } from './components/ProtectedRoute.js';
+import Insurance from './pages/insurance.jsx';
 const App = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const sidebarWidth = sidebarOpen ? '200px' : '0px'; // Adjust this value based on your sidebar's width
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/employeelist" element={<EmployeeList />} />
           <Route path="/leaves" element={<LeaveDetailsPage />} />
+          <Route path="/insrunace" element={<Insurance />} />
           {/* For EmployeeDetails, you will need a parameterized route */}
           <Route path="/employee/:EmployeeID" element={<EmployeeDetails />} />
           <Route path="/EmployeeByNum/:insuranceNumber" element={<EmployeeByNum />} />

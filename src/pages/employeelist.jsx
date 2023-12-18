@@ -10,7 +10,7 @@ const EmployeeList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/employee/')
+    axios.get('https://halotrust.pythonanywhere.com/employee/')
       .then(response => {
         setEmployees(response.data);
         setIsLoading(false);

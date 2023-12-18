@@ -9,7 +9,7 @@ const EmployeeByNum = () => {
     const { insuranceNumber } = useParams();
     const baseURL = 'http://127.0.0.1:8000';
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/employee/${insuranceNumber}/`)
+        axios.get(`https://halotrust.pythonanywhere.com/employee/${insuranceNumber}/`)
             .then(response => setEmployee(response.data))
             .catch(error => setError('Employee not found'));
     }, [insuranceNumber]);
@@ -100,11 +100,11 @@ const EmployeeByNum = () => {
                     <Card>
                         <CardBody>
                             <CardTitle tag="h5">Signature</CardTitle>
-                          <img
+                          {/* <img
                             src={`${baseURL}${employee.signature.signature_file}`}
                             alt="Signature"
                             className="img-thumbnail mb-3"
-                        />
+                        /> */}
                         </CardBody>
                     </Card>
                 </Col>
