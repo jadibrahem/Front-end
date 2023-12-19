@@ -10,7 +10,7 @@ const LeaveRequestsList = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/leave/')
+        axios.get('https://halotrust.pythonanywhere.com/leave/')
             .then(response => {
                 setLeaveRequests(response.data);
             })
