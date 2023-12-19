@@ -3,6 +3,7 @@ import axios from 'axios';
 import { List, ListItem, ListItemText, Badge, Container, Typography, Paper, Button } from '@mui/material';
 import moment from 'moment';
 import { Link, useNavigate } from 'react-router-dom';
+import { RemoteUrl } from '../instant';
 
 
 const LeaveRequestsList = () => {
@@ -10,7 +11,7 @@ const LeaveRequestsList = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/leave/')
+        axios.get(`${RemoteUrl}/leave/`)
             .then(response => {
                 setLeaveRequests(response.data);
             })

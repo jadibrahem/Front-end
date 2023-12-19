@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col, Card, CardBody, CardTitle, ListGroup, ListGroupItem, Table } from 'reactstrap';
+import { RemoteUrl } from '../instant';
 
 const EmployeeByNum = () => {
     const [employee, setEmployee] = useState(null);
@@ -9,7 +10,7 @@ const EmployeeByNum = () => {
     const { insuranceNumber } = useParams();
     const baseURL = 'http://127.0.0.1:8000';
     useEffect(() => {
-        axios.get(`https://halotrust.pythonanywhere.com/employee/${insuranceNumber}/`)
+        axios.get(`${RemoteUrl}/employee/${insuranceNumber}/`)
             .then(response => setEmployee(response.data))
             .catch(error => setError('Employee not found'));
     }, [insuranceNumber]);

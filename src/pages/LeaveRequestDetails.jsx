@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, CardBody, CardTitle, ListGroup, ListGroupItem, Button, Alert, FormGroup, Label, Input } from 'reactstrap';
 import moment from 'moment';
+import { RemoteUrl } from '../instant';
 
 const LeaveRequestDetails = () => {
     const [leaveRequest, setLeaveRequest] = useState(null);
@@ -14,7 +15,7 @@ const LeaveRequestDetails = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios.get(`http://127.0.0.1:8000/leave/${id}/`)
+        axios.get(`${RemoteUrl}/leave/${id}/`)
             .then(response => {
                 setLeaveRequest(response.data);
                 setNewStatus(response.data.Status);
@@ -31,7 +32,7 @@ const LeaveRequestDetails = () => {
     };
 
     const updateLeaveStatus = () => {
-        axios.put(`http://127.0.0.1:8000/leave/${id}/`, { ...leaveRequest, Status: newStatus })
+        axios.put(`${RemoteUrl}/leave/${id}/`, { ...leaveRequest, Status: newStatus })
             .then(response => {
                 alert("Leave status updated successfully!");
                 navigate('/leave-requests'); // Redirect to the leave requests list

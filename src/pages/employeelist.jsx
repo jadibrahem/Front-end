@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Card, CardHeader, CardBody, Table, Alert, Spinner, Input, InputGroup, Button } from 'reactstrap';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
+import { RemoteUrl } from '../instant';
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
@@ -10,7 +11,7 @@ const EmployeeList = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('https://halotrust.pythonanywhere.com/employee/')
+    axios.get(`${RemoteUrl}/employee/`)
       .then(response => {
         setEmployees(response.data);
         setIsLoading(false);
