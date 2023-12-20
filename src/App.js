@@ -27,7 +27,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Sidebar isOpen={sidebarOpen} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-      <div style={{ marginLeft: sidebarWidth, transition: 'margin-left .5s',  }}>
+      <div className='mainDiv' style={{ transition: 'margin-left .5s',  }}>
         <Routes>
           <Route path="/" element={<FormSelectionPage />} />
           <Route path="/login" element={<Login />} />

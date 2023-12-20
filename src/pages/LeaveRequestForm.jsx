@@ -13,6 +13,7 @@ import {
   Col,
   Alert
 } from 'reactstrap';
+import { RemoteUrl } from '../instant';
 
 const LeaveRequestForm = () => {
   const [insuranceNumber, setInsuranceNumber] = useState('');
@@ -67,7 +68,7 @@ const LeaveRequestForm = () => {
     // Submit the form data to the backend
     axios({
       method: 'post',
-      url: 'http://127.0.0.1:8000/leave-request/',
+      url: `${RemoteUrl}/leave-request/`,
       data: formData,
       headers: { 'Content-Type': 'multipart/form-data' }
     })
