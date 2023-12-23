@@ -78,13 +78,17 @@ const EmployeeList = () => {
               </tr>
             </thead>
             <tbody>
-              {employees.map(employee => (
+            {employees.map(employee => (
                 <tr key={employee.EmployeeID}>
                   <td>{employee.EmployeeID}</td>
                   <td>
-                    <Link to={`/employee/${employee.EmployeeID}`}>
-                      {employee.FirstName} {employee.LastName}
-                    </Link>
+                    {employee.InsuranceNumber ? (
+                      <Link to={`/qr-code/${employee.InsuranceNumber}`}>
+                        {employee.FirstName} {employee.LastName}
+                      </Link>
+                    ) : (
+                      <span>No Insurance Number</span>
+                    )}
                   </td>
                   <td>{moment(employee.DateHired).format('YYYY-MM-DD')}</td>
                   <td>{moment(employee.DateOfBirth).format('YYYY-MM-DD')}</td>

@@ -19,7 +19,9 @@ import LeavePdf from './pages/LeavePdf.jsx';
 import EmployeeLeaveInfo from './pages/EmployeeLeaveInfo.jsx';
 import Login from './pages/Login.jsx'
 import { ProtectedRoute } from './components/ProtectedRoute.js';
+import QRCodePage from './components/QRCodePage';
 import Insurance from './pages/insurance.jsx';
+import QRScanPage from './pages/QRScanPage.jsx';
 const App = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const sidebarWidth = sidebarOpen ? '200px' : '0px'; // Adjust this value based on your sidebar's width
@@ -47,6 +49,8 @@ const App = () => {
           <Route path="/InsuranceNumberInputPage" element={<InsuranceNumberInputPage />} /> {/* Attendance page route */}
           <Route path="/employee/:insuranceNumber/leaves" element={<EmployeeLeaveInfo />} />
           <Route path="/leavepdf/:leaveId" element={<LeavePdf />} />
+          <Route path="/qr-code/:insuranceNumber" element={<QRCodePage />} />
+          <Route path="/scan-qr-code" element={<QRScanPage />} />
         </Routes>
       </div>
     </BrowserRouter>
