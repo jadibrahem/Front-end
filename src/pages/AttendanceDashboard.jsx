@@ -1,98 +1,148 @@
-import React from 'react';
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-  Table,
-} from 'reactstrap';
-import { Doughnut, Bar } from 'react-chartjs-2';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, CardBody, CardTitle, Alert, Table } from 'reactstrap';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const AttendanceDashboard = () => {
-  // Dummy data for charts
-  const workLocationData = {
-    labels: ['Home', 'Office'],
-    datasets: [
-      {
-        data: [300, 50], // example data
-        backgroundColor: ['#FF6384', '#36A2EB'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB'],
-      },
-    ],
+  const [dashboardData, setDashboardData] = useState({
+    daily: {}, weekly: {}, monthly: {}, status_breakdown: [], late_trends: [], department_summary: [], absenteeism_rate: 0, most_attended_employees: []
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetchAttendanceDashboardData();
+  }, []);
+
+  const fetchAttendanceDashboardData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('http://localhost:8000/attendance/dash/');
+      const data = await response.json();
+      setDashboardData(data);
+    } catch (err) {
+      setError('Failed to load dashboard data');
+      console.error('Error fetching dashboard data:', err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const attendanceByDepartmentData = {
-    labels: ['Finance', 'IT', 'Sales', 'Human Resources', 'Marketing', 'Administration'],
-    datasets: [
-      {
-        label: 'Attendance',
-        data: [65, 59, 80, 81, 56, 55], // example data
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  // Example data for the top 5 employees by attendance
-  const topEmployeesData = [
-    { name: 'jad ibrahim', attendance: '100%' },
-    { name: 'hein bekker', attendance: '97%' },
-    { name: 'mustafa', attendance: '96%' },
-    { name: 'Michael Brown', attendance: '95%' },
-    { name: 'Jessica Davis', attendance: '94%' },
-  ];
+  const renderDataCard = (title, data) => (
+    <Card>
+      <CardBody>
+        <CardTitle tag="h5">{title}</CardTitle>
+        <div>Total Count: {data.total_count || 'N/A'}</div>
+        <div>Total Hours: {data.total_hours || 'N/A'}</div>
+        <div>Late Arrivals: {data.late_count || 'N/A'}</div>
+        <div>Early Leaves: {data.early_leave_count || 'N/A'}</div>
+        <div>Overtime Hours: {data.overtime_hours || 'N/A'}</div>
+      </CardBody>
+    </Card>
+  );
 
   return (
-    <div className="container-fluid">
+    <Container>
       <Row>
-        <Col md={6}>
-          <Card>
-            <CardBody>
-              <CardTitle tag="h5">Employee Work Location Breakdown</CardTitle>
-              <div style={{ maxWidth: '200px', margin: '0 auto' }}> {/* Adjust size as needed */}
-                <Doughnut data={workLocationData} />
-              </div>
-            </CardBody>
-          </Card>
-        </Col>
-        <Col md={6}>
-          <Card>
-            <CardBody>
-              <CardTitle tag="h5">Attendance by Department</CardTitle>
-              <Bar data={attendanceByDepartmentData} />
-            </CardBody>
-          </Card>
-        </Col>
         <Col md={12}>
-          <Card>
-            <CardBody>
-              <CardTitle tag="h5">Top 5 Employees by Attendance</CardTitle>
-              <Table striped>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Employee Name</th>
-                    <th>Attendance</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {topEmployeesData.map((employee, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{employee.name}</td>
-                      <td>{employee.attendance}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </CardBody>
-          </Card>
+          <h1>Attendance Dashboard</h1>
+          {isLoading && <p>Loading...</p>}
+          {error && <p>{error}</p>}
+          {!isLoading && !error && (
+            <>
+              <Row>
+                <Col sm={4}>{renderDataCard('Daily', dashboardData.daily)}</Col>
+                <Col sm={4}>{renderDataCard('Weekly', dashboardData.weekly)}</Col>
+                <Col sm={4}>{renderDataCard('Monthly', dashboardData.monthly)}</Col>
+              </Row>
+
+              {/* Late Trends Bar Chart */}
+              <Row>
+                <Col sm={12}>
+                  <Card>
+                    <CardBody>
+                      <CardTitle tag="h5">Late Arrival Trends</CardTitle>
+                      <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={dashboardData.late_trends}>
+                          <XAxis dataKey="late_date" />
+                          <YAxis />
+                          <Tooltip />
+                          <Legend />
+                          <Bar dataKey="count" fill="#8884d8" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+
+              {/* Status Breakdown */}
+              <Row>
+                <Col sm={12}>
+                  <Card>
+                    <CardBody>
+                      <CardTitle tag="h5">Status Breakdown</CardTitle>
+                      {/* Render status breakdown data here */}
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+
+              {/* Department Summary */}
+              <Row>
+                <Col sm={12}>
+                  <Card>
+                    <CardBody>
+                      <CardTitle tag="h5">Department Summary</CardTitle>
+                      {/* Render department summary data here */}
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+
+              {/* Absenteeism Rate */}
+              <Row>
+                <Col sm={12}>
+                  <Card>
+                    <CardBody>
+                      <CardTitle tag="h5">Absenteeism Rate</CardTitle>
+                      <div>{dashboardData.absenteeism_rate.toFixed(2)}%</div>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+
+              {/* Most Attended Employees Table */}
+              <Row>
+                <Col sm={12}>
+                  <Card>
+                    <CardBody>
+                      <CardTitle tag="h5">Top Employees by Attendance</CardTitle>
+                      <Table striped>
+                        <thead>
+                          <tr>
+                            <th>Employee Name</th>
+                            <th>Attendance Count</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {dashboardData.most_attended_employees.map((employee, index) => (
+                            <tr key={index}>
+                              <td>{employee.employee__FirstName} {employee.employee__LastName}</td>
+                              <td>{employee.total_attendance}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </Table>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+
+            </>
+          )}
         </Col>
-        {/* Additional metrics could go here */}
       </Row>
-    </div>
+    </Container>
   );
 };
 

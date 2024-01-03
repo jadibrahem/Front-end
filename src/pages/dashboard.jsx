@@ -13,7 +13,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         // Replace with your actual API endpoint
-        axios.get('http://127.0.0.1:8000/org-structure/')
+        axios.get('https://halotrust.pythonanywhere.com/org-structure/')
             .then(response => {
                 setDepartments(response.data);
             })

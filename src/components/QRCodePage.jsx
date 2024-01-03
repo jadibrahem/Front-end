@@ -8,7 +8,7 @@ const QRCodePage = () => {
 
   useEffect(() => {
     // Fetch QR code image from the backend
-    fetch(`http://127.0.0.1:8000/qr-code/${insuranceNumber}/`)
+    fetch(`https://halotrust.pythonanywhere.com/qr-code/${insuranceNumber}/`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Failed to fetch QR code: ${response.statusText}`);

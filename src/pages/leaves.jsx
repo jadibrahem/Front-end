@@ -9,7 +9,7 @@ const LeaveDetailsPage = () => {
 
     useEffect(() => {
         // Replace '/api/leave-details' with your actual API endpoint
-        axios.get('http://127.0.0.1:8000/employee-leave-info/')
+        axios.get('https://halotrust.pythonanywhere.com/employee-leave-info/')
             .then(response => {
                 setLeaveData(response.data);
             })

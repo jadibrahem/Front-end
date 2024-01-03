@@ -9,7 +9,7 @@ const EmployeeLeaveInfo = () => {
     const { insuranceNumber } = useParams();
 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/employee/${insuranceNumber}/leaves/`)
+        axios.get(`https://halotrust.pythonanywhere.com/employee/${insuranceNumber}/leaves/`)
             .then(response => {
                 setLeaveData(response.data);
             })
