@@ -82,15 +82,14 @@ const LeaveRequestForm = () => {
     });
   };
 
- 
   return (
     <Card>
       <CardBody>
-        <CardTitle tag="h5">Leave Request Form</CardTitle>
+        <CardTitle tag="h5">Leave Request Form / نموذج طلب إجازة</CardTitle>
         <Form onSubmit={handleSubmit}>
           <FormGroup row>
             <Label for="insuranceNumber" sm={2}>
-              Insurance Number:
+              Insurance Number / رقم التأمين:
             </Label>
             <Col sm={10}>
               <Input
@@ -105,7 +104,7 @@ const LeaveRequestForm = () => {
           </FormGroup>
           <FormGroup row>
             <Label for="leaveType" sm={2}>
-              Leave Type:
+              Leave Type / نوع الإجازة:
             </Label>
             <Col sm={10}>
               <Input
@@ -115,15 +114,15 @@ const LeaveRequestForm = () => {
                 value={leaveType}
                 onChange={(e) => setLeaveType(e.target.value)}
               >
-                <option value="paid">Paid</option>
-                <option value="unpaid">Unpaid</option>
-                <option value="sick">Sick Leave</option>
+                <option value="paid">Paid / مدفوعة</option>
+                <option value="unpaid">Unpaid / غير مدفوعة</option>
+                <option value="sick">Sick Leave / إجازة مرضية</option>
               </Input>
             </Col>
           </FormGroup>
           <FormGroup row>
             <Label for="startDate" sm={2}>
-              Start Date:
+              Start Date / تاريخ البدء:
             </Label>
             <Col sm={10}>
               <Input
@@ -138,7 +137,7 @@ const LeaveRequestForm = () => {
           </FormGroup>
           <FormGroup row>
             <Label for="endDate" sm={2}>
-              End Date:
+              End Date / تاريخ الانتهاء:
             </Label>
             <Col sm={10}>
               <Input
@@ -153,7 +152,7 @@ const LeaveRequestForm = () => {
           </FormGroup>
           <FormGroup row>
             <Label for="reason" sm={2}>
-              Reason:
+              Reason / السبب:
             </Label>
             <Col sm={10}>
               <Input
@@ -166,7 +165,7 @@ const LeaveRequestForm = () => {
             </Col>
           </FormGroup>
           <FormGroup row>
-            <Label sm={2}>Signature:</Label>
+            <Label sm={2}>Signature / التوقيع:</Label>
             <Col sm={10}>
               <SignatureCanvas
                 ref={sigCanvas}
@@ -179,7 +178,7 @@ const LeaveRequestForm = () => {
                 onEnd={saveSignature}
               />
               <Button color="secondary" onClick={clearSignature}>
-                Clear Signature
+                Clear Signature / مسح التوقيع
               </Button>
             </Col>
           </FormGroup>
@@ -199,22 +198,22 @@ const LeaveRequestForm = () => {
               </Col>
             </FormGroup>
           )}
-          <FormGroup check row>
-            <Col sm={{ size: 10, offset: 2 }}>
-              <Button type="submit" color="primary">
-                Submit Request
-              </Button>
+   <FormGroup check row>
+      <Col sm={{ size: 10, offset: 2 }}>
+        <Button type="submit" color="primary">
+          Submit Request / إرسال الطلب
+        </Button>
             </Col>
           </FormGroup>
-        </Form>
+        </Form> {/* Make sure this closing tag exists */}
         {error && (
-        <Alert color="danger" className="mt-3">
-          Error submitting the leave request: {error.message || 'An error occurred'}
-        </Alert>
-    )}
+          <Alert color="danger" className="mt-3">
+            Error submitting the leave request: {error.message || 'An error occurred'}
+          </Alert>
+        )}
       </CardBody>
-    </Card>
-  );
+          </Card>
+        );
 };
 
 export default LeaveRequestForm;

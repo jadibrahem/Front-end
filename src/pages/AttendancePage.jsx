@@ -24,7 +24,7 @@ const AttendancePage = () => {
   const fetchAttendanceData = async () => {
     setIsLoading(true);
     setError('');
-    let apiUrl = 'http://localhost:8000/attendance/';
+    let apiUrl = 'https://halotrust.pythonanywhere.com/attendance/';
 
     if (selectedDepartment) {
       apiUrl += `department/${selectedDepartment}/`;

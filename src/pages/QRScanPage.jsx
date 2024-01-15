@@ -15,7 +15,7 @@ const QRScanPage = () => {
       setAlertColor('secondary');
 
       try {
-        const response = await fetch('http://localhost:8000/scan-qr-code/', {
+        const response = await fetch('https://halotrust.pythonanywhere.com/scan-qr-code/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

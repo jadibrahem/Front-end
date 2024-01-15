@@ -22,6 +22,7 @@ import { ProtectedRoute } from './components/ProtectedRoute.js';
 import QRCodePage from './components/QRCodePage';
 import Insurance from './pages/insurance.jsx';
 import QRScanPage from './pages/QRScanPage.jsx';
+import TeamDetailsPage from './pages/teams/team.jsx';
 const App = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const sidebarWidth = sidebarOpen ? '200px' : '0px'; // Adjust this value based on your sidebar's width
@@ -51,6 +52,7 @@ const App = () => {
           <Route path="/leavepdf/:leaveId" element={<LeavePdf />} />
           <Route path="/qr-code/:insuranceNumber" element={<QRCodePage />} />
           <Route path="/scan-qr-code" element={<QRScanPage />} />
+          <Route path="/teams" element={<TeamDetailsPage />} />
         </Routes>
       </div>
     </BrowserRouter>
