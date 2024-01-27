@@ -23,11 +23,21 @@ import QRCodePage from './components/QRCodePage';
 import Insurance from './pages/insurance.jsx';
 import QRScanPage from './pages/QRScanPage.jsx';
 import TeamDetailsPage from './pages/teams/team.jsx';
+import FinanceLogin from './pages/finance/finlog.jsx';
+import PurchaseRequestForm from './pages/finance/PurchaseRequestForm.jsx';
+import PurchaseRequestList from './pages/finance/PurchaseRequestList.jsx';
+import PurchaseRequestDetail from './pages/finance/PurchaseRequestDetail.jsx';
+// import AuthRouteWrapper from '.pages/finance/AuthRouteWrapper.js
+import { Protected } from './pages/finance/Protected';
+
+import { AuthProvider } from './pages/finance/AuthContext.js';
+
 const App = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const sidebarWidth = sidebarOpen ? '200px' : '0px'; // Adjust this value based on your sidebar's width
+
 
   return (
+    <AuthProvider>
     <BrowserRouter>
       <Sidebar isOpen={sidebarOpen} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
       <div className='mainDiv' style={{ transition: 'margin-left .5s',  }}>
@@ -50,12 +60,20 @@ const App = () => {
           <Route path="/InsuranceNumberInputPage" element={<InsuranceNumberInputPage />} /> {/* Attendance page route */}
           <Route path="/employee/:insuranceNumber/leaves" element={<EmployeeLeaveInfo />} />
           <Route path="/leavepdf/:leaveId" element={<LeavePdf />} />
+
           <Route path="/qr-code/:insuranceNumber" element={<QRCodePage />} />
           <Route path="/scan-qr-code" element={<QRScanPage />} />
+
           <Route path="/teams" element={<TeamDetailsPage />} />
+
+          <Route path="/finance" element={<FinanceLogin />} />
+          <Route path="/purchas-requests" element={<PurchaseRequestForm />} />
+          <Route path="/purchas-requests/:requestId" element={<PurchaseRequestDetail />} />
+          <Route path="/purchas-list"   element={<PurchaseRequestList />} />
         </Routes>
       </div>
     </BrowserRouter>
+    </AuthProvider>
   );
 };
 

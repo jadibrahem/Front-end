@@ -1,0 +1,50 @@
+.finance-login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f7f6;
+}
+
+.finance-login-form {
+    width: 350px;
+    padding: 30px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.finance-login-form h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.finance-login-form input {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.finance-login-form button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.finance-login-form button:hover {
+    background-color: #0056b3;
+}
+
+.finance-login-form .error-message {
+    color: #ff3860;
+    margin-top: 10px;
+}

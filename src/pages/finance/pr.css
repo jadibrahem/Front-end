@@ -1,0 +1,73 @@
+.purchase-request-detail {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.purchase-request-detail h1, .purchase-request-detail h2 {
+    color: #333;
+}
+
+.purchase-request-detail h1 {
+    margin-bottom: 30px;
+}
+
+.purchase-request-detail h2 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.purchase-request-detail Table {
+    margin-bottom: 25px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.purchase-request-detail Table th {
+    background-color: #06468a; /* Bootstrap primary color */
+    color: #fff;
+    text-align: left;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.purchase-request-detail Table td, .purchase-request-detail Table th {
+    padding: 12px;
+    border: 1px solid #dee2e6;
+}
+
+.purchase-request-detail Table td {
+    background-color: #f8f9fa; /* Slightly off-white background for rows */
+}
+
+.purchase-request-detail Button {
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: none; /* Remove default border */
+}
+
+.purchase-request-detail Button.color-success {
+    background-color: #28a745; /* Bootstrap success color */
+    color: #fff;
+}
+
+.purchase-request-detail Button.color-danger {
+    background-color: #dc3545; /* Bootstrap danger color */
+    color: #fff;
+}
+
+.purchase-request-detail Button:not(:last-child) {
+    margin-right: 10px;
+}
+
+.purchase-request-detail .user-info {
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.purchase-request-detail .status-info {
+    margin-top: 30px;
+    font-weight: bold;
+}
