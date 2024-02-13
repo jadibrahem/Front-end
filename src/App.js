@@ -29,7 +29,9 @@ import PurchaseRequestList from './pages/finance/PurchaseRequestList.jsx';
 import PurchaseRequestDetail from './pages/finance/PurchaseRequestDetail.jsx';
 // import AuthRouteWrapper from '.pages/finance/AuthRouteWrapper.js
 import { Protected } from './pages/finance/Protected';
-
+import RFQList from './pages/finance/RFQList.jsx';
+import RFQForm from './pages/finance/RFQform.jsx';
+import QuotationRequestDetail  from './pages/finance/RFQdetail.jsx';
 import { AuthProvider } from './pages/finance/AuthContext.js';
 
 const App = () => {
@@ -70,6 +72,9 @@ const App = () => {
           <Route path="/purchas-requests" element={<PurchaseRequestForm />} />
           <Route path="/purchas-requests/:requestId" element={<PurchaseRequestDetail />} />
           <Route path="/purchas-list"   element={<PurchaseRequestList />} />
+          <Route path="/rfq-list" element={<RFQList />} />
+          <Route path="/rfq-form" element={<RFQForm />} />
+          <Route path="/rfq-detail/:requestId"  element={<QuotationRequestDetail />} />
         </Routes>
       </div>
     </BrowserRouter>

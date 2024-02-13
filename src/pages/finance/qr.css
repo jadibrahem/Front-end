@@ -1,0 +1,63 @@
+.quotation-detail {
+    padding: 20px;
+    border-radius: 10px;
+    background: #f0f2f5; /* Lighter grey for the background */
+}
+
+.page-title {
+    font-size: 2.2rem;
+    color: #212529; /* Bootstrap's default dark color */
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.detail-card {
+    margin-bottom: 25px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 6px 16px  #1a3c5e; /* Softer shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.detail-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px #1a3c5e; /* Slightly deeper shadow on hover */
+}
+
+.card-header {
+    background: linear-gradient(to right,  #1a3c5e 0%, #1a3c5e 100%); /* Darker gradient from Bootstrap's gray palette */
+    color: #ffffff;
+    font-size: 1.4rem;
+}
+
+.card-body {
+    background-color: #ffffff; /* White background for the body to keep the text readable */
+}
+
+.table th {
+    background-color: #1a3c5e; /* Dark grey for table headers */
+    color: #ffffff; /* White text for contrast */
+}
+
+.table td {
+    background-color: #ffffff; /* White background for table cells */
+    color: #0e345a; /* Bootstrap's default dark color for text */
+}
+
+.table tbody tr:hover {
+    background-color: #e9ecef; /* Light grey for hover, provides subtle feedback */
+}
+
+@media (max-width: 768px) {
+    .quotation-detail {
+        padding: 10px;
+    }
+
+    .page-title {
+        font-size: 1.75rem; /* Slightly smaller font size for smaller screens */
+    }
+
+    .card-header {
+        font-size: 1.25rem; /* Adjusting header font size for consistency on smaller screens */
+    }
+}
