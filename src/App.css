@@ -1,34 +1,97 @@
-*{
-  margin:0;
-  padding:0;
+* {
+  margin: 0;
+  padding: 0;
   text-decoration: none;
 }
-.container{
-  display:flex;
-}
 
-.mainDiv{
+.container {
   display: flex;
-  width: 80%;
-  margin-left: 10%;
-  justify-content: center; 
+  width: 100%; /* Ensure the container spans the full width */
 }
 
-main{
+.sidebar {
+  background: linear-gradient(to bottom, rgb(23, 20, 85), rgb(35, 32, 142)); /* Modern gradient */
+  color: #fff;
+  height: 100vh;
+  width: 250px; /* Adjusted for aesthetic */
+  transition: all 0.5s ease;
+  position: fixed;
+  left: 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.top_section, .link {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  padding: 20px 15px;
+}
+
+.logo, .link_text {
+  font-size: 1.5rem; /* Increased logo size */
+  font-weight: bold; /* Make the logo bold */
+}
+
+.bars {
+  margin-left: auto; /* Push the bars icon to the right */
+  cursor: pointer; /* Indicate the bars icon is clickable */
+}
+
+.link {
+  gap: 15px;
+  transition: background 0.3s ease;
+}
+
+.link:hover, .active {
+  background: lightskyblue;
+  color: #000;
+  border-left: 4px solid deepskyblue; /* Add a left border for active/highlight */
+}
+
+.icon {
+  min-width: 30px; /* Ensure icons align nicely */
+  text-align: center;
+}
+
+.link_text {
+  display: none; /* Hide text by default for a cleaner look */
+}
+
+.sidebar:hover .link_text {
+  display: inline; /* Show text on sidebar hover */
+}
+
+/* Add responsive styling for smaller screens */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 80px; /* Smaller sidebar on small screens */
+  }
+
+  .sidebar:hover {
+    width: 250px; /* Expand on hover */
+  }
+
+  .mainDiv {
+    margin-left: 80px; /* Adjust main content margin */
+    width: calc(100% - 80px); /* Adjust main content width */
+  }
+
+  .sidebar:hover + .mainDiv {
+    margin-left: 250px; /* Adjust main content margin when sidebar expands */
+  }
+}
+
+.mainDiv {
+  display: flex;
+  width: calc(100% - 200px); /* Calculate width by subtracting sidebar width */
+  margin-left: 200px; /* Offset by the sidebar's width */
+  justify-content: center;
+}
+
+main {
   width: 100%;
   padding: 20px;
 }
-.sidebar{
-  background: rgb(23, 20, 85);
-  color: #fff;
-  height: 100vh;
-  width: 200px;
-  transition: all 0.5s; 
-  position: fixed; /* Position it fixed to the viewport */
-  left: 0; /* Align to the left */
-  
 
-}
 .top_section{
   display: flex;
   align-items:center;

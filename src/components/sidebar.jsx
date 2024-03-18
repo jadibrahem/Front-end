@@ -8,11 +8,24 @@ import log from '../components/log'; // Ensure this path is correct to your log 
 
 const Sidebar = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
+ 
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
-
+    const loginType = sessionStorage.getItem('loginType'); 
     const toggle = () => setIsOpen(!isOpen);
+    const logoutHandler = () => {
+        const isConfirmed = window.confirm("Are you sure you want to logout?");
+        if (isConfirmed) {
+            log.logout(); // Assuming this function clears the session and user state
+            setUser(null);
+            sessionStorage.removeItem('loginType'); // Clear any finance-specific session info
+            navigate('/'); // Navigate to the homepage after logout
+        }
+    };
 
+    const logoutMenuItem = {
+        // Assign the logoutHandler to the action property
+    };
     useEffect(() => {
         const loggedInUser = log.getCurrentUser();
         setUser(loggedInUser);
@@ -22,12 +35,33 @@ const Sidebar = ({ children }) => {
         navigate('/finance-login'); // Replace with your finance login route
     };
 
-    const logoutHandler = () => {
-        log.logout();
-        setUser(null);
-        navigate('/login');
-    };
-
+   
+    const financeMenu = [
+        {
+            path: "/FinanceDashboard",
+            name: "Finance Dashboard",
+            icon: <FaDollarSign />,
+            cName: 'nav-text'
+        },
+        // Additional finance-specific menu items
+        {
+            path: "/purchas-list",
+            name: "Purchase Request",
+            icon: <FaFile />,
+            cName: 'nav-text'
+        }, {
+            path: "/rfq-list",
+            name: "Quotation Request",
+            icon: <FaFile />,
+            cName: 'nav-text'
+        },
+       { path: "/login",
+        name: "Logout",
+        icon: <FaUserAlt />,
+        action: logoutHandler,
+    }
+       
+    ];
     // Menu items for unlogged users
     const unloggedUserMenu = [
         {
@@ -87,7 +121,8 @@ const Sidebar = ({ children }) => {
         }
         // ...other items for logged-in users
     ];
-
+    
+    const menuToDisplay = loginType === 'finance' ? financeMenu : (user ? loggedUserMenu : unloggedUserMenu);
     return (
         <div className="container">
             <div className="sidebar" style={{ width: isOpen ? "200px" : "50px" }}>
@@ -98,21 +133,13 @@ const Sidebar = ({ children }) => {
                     </div>
                 </div>
 
-                {user ? loggedUserMenu.map((item, index) => (
-                    <React.Fragment key={index}>
-                        <NavLink to={item.path} className="link" activeClassName="active">
-                            <div className="icon">{item.icon}</div>
-                            <div style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</div>
-                        </NavLink>
-                    </React.Fragment>
-                )) : unloggedUserMenu.map((item, index) => (
-                    <React.Fragment key={index}>
-                        <NavLink to={item.path} className="link" activeClassName="active">
-                            <div className="icon">{item.icon}</div>
-                            <div style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</div>
-                        </NavLink>
-                    </React.Fragment>
+                {menuToDisplay.map((item, index) => (
+                    <NavLink key={index} to={item.path} className="link" activeClassName="active">
+                        <div className="icon">{item.icon}</div>
+                        <div style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</div>
+                    </NavLink>
                 ))}
+
                 {user && (
                     <div className="logout" onClick={logoutHandler}>
                         <NavLink to="/login" className="link" activeClassName="active">

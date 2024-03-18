@@ -33,7 +33,7 @@ import RFQList from './pages/finance/RFQList.jsx';
 import RFQForm from './pages/finance/RFQform.jsx';
 import QuotationRequestDetail  from './pages/finance/RFQdetail.jsx';
 import { AuthProvider } from './pages/finance/AuthContext.js';
-
+import FinanceDashboard from './pages/finance/FinanceDashboard.jsx';
 const App = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
@@ -75,6 +75,7 @@ const App = () => {
           <Route path="/rfq-list" element={<RFQList />} />
           <Route path="/rfq-form" element={<RFQForm />} />
           <Route path="/rfq-detail/:requestId"  element={<QuotationRequestDetail />} />
+          <Route path="/FinanceDashboard" element={<FinanceDashboard />} />
         </Routes>
       </div>
     </BrowserRouter>

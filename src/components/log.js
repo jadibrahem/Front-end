@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const API_URL = 'https://halotrust.pythonanywhere.com/login/';
-
 const login = async (username, password) => {
   const response = await axios.post(API_URL, {
     username,
@@ -14,7 +13,10 @@ const login = async (username, password) => {
 };
 
 const logout = () => {
+  
   localStorage.removeItem('user');
+  localStorage.removeItem('currentUser');
+  sessionStorage.removeItem('token'); 
 };
 
 const getCurrentUser = () => {

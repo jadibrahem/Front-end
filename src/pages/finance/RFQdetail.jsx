@@ -1,10 +1,11 @@
     import React, { useState, useEffect } from 'react';
     import axios from 'axios';
     import { useParams, useNavigate } from 'react-router-dom';
-    import { Container, Row, Col, Table, Alert, Card, CardHeader, CardBody } from 'reactstrap';
+    import { Container, Row, Col, Table, Alert, Card, CardHeader, CardBody , Button} from 'reactstrap';
     // Make sure to create and style your QR page
     // Make sure this function exists and is imported correctly
     import './qr.css';
+    import { generateQuotationPDF } from './RFQPDF.jsx';
     const QuotationRequestDetail = () => {
         const { requestId } = useParams();
         const navigate = useNavigate();
@@ -34,7 +35,12 @@
 
             fetchQuotationRequestAndUser();
         }, [requestId]);
-
+        const handleGeneratePDF = () => {
+            if (quotationRequest) {
+                generateQuotationPDF(quotationRequest);
+            }
+        };
+    
         if (!quotationRequest) {
             return <div>Loading...</div>;
         }
@@ -101,11 +107,12 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
+                                           
                                             <th>Description</th>
                                             <th>Unit</th>
                                             <th>Unit Cost</th>
                                             <th>Quantity</th>
+                                            <th>unit_rate</th>
                                             <th>Total Cost</th>
                                             <th>Lead Time</th>
                                             <th>Comments</th>
@@ -115,11 +122,12 @@
                                         {quotationRequest.items.map((item, index) => (
                                             <tr key={index}>
                                                 <td>{index + 1}</td>
-                                                <td>{item.name}</td>
+                                                
                                                 <td>{item.description}</td>
                                                 <td>{item.unit}</td>
                                                 <td>{item.unit_cost}</td>
                                                 <td>{item.quantity}</td>
+                                                <td>{item.unit_rate}</td>
                                                 <td>{item.quantity * item.unit_cost}</td>
                                                 <td>{item.lead_time}</td>
                                                 <td>{item.comments}</td>
@@ -162,6 +170,13 @@
     
                     </Col>
                 </Row>
+                <Row>
+                <Col className="text-center">
+                    <Button color="primary" onClick={handleGeneratePDF}>
+                        Generate PDF
+                    </Button>
+                </Col>
+            </Row>
             </Container>
         );
     };

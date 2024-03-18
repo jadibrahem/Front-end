@@ -15,12 +15,12 @@ const FinanceLogin = () => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8000/finance/login/', { username, password });
-            sessionStorage.setItem('token', response.data.token); // Store the token
-            login(response.data.user);  // Assuming the response includes the user data
-            navigate('/purchas-list');
+            sessionStorage.setItem('token', response.data.token);
+            sessionStorage.setItem('loginType', 'finance'); // Store login type
+            login(response.data.user);
+            navigate('/finance-dashboard'); // Navigate to a finance-specific dashboard if you have one
         } catch (error) {
             console.error('Login failed:', error);
-            // Update error state with a user-friendly message
             setError('Failed to log in. Please check your credentials.');
         }
     };

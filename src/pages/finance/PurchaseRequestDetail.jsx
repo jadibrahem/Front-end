@@ -13,8 +13,9 @@ const PurchaseRequestDetail = () => {
     const [approvalLogs, setApprovalLogs] = useState([]);
     const [editedItems, setEditedItems] = useState({});
     const [editItemIndex, setEditItemIndex] = useState(null);
+
     useEffect(() => {
-        const fetchPurchaseRequestAndUser = async () => {
+        const fetchDetails = async () => {
             const token = sessionStorage.getItem('token');
             try {
                 const [prResponse, userResponse] = await Promise.all([
@@ -23,7 +24,7 @@ const PurchaseRequestDetail = () => {
                     }),
                     axios.get('http://localhost:8000/current-user/', {
                         headers: { Authorization: `Token ${token}` },
-                    })
+                    }),
                 ]);
                 setPurchaseRequest(prResponse.data);
                 setCurrentUser({ username: userResponse.data.username, userType: userResponse.data.user_type });
@@ -32,8 +33,8 @@ const PurchaseRequestDetail = () => {
                 setError('Failed to load purchase request or user data');
             }
         };
-    
-        fetchPurchaseRequestAndUser();
+
+        fetchDetails();
     }, [requestId]);
     useEffect(() => {
         const fetchApprovalLogs = async () => {
@@ -55,6 +56,85 @@ const PurchaseRequestDetail = () => {
         fetchPurchaseRequestAndUser();
         fetchApprovalLogs(); // Fetch approval logs
     }, [requestId]);
+    const handleEdit = (index) => {
+        setEditItemIndex(index);
+        const item = purchaseRequest.items[index];
+        setEditedItems({ ...editedItems, [index]: { ...item } });
+    };
+
+    const handleChange = (index, field, value) => {
+        const updatedItem = { ...editedItems[index], [field]: value };
+        setEditedItems({ ...editedItems, [index]: updatedItem });
+    };
+
+    const handleSaveAll = async () => {
+        // Create an array of updated items
+        const updatedItems = purchaseRequest.items.map((item, index) => {
+            if (editedItems[index]) {
+                return {
+                    ...item,
+                    ...editedItems[index],
+                    unit_cost: parseFloat(editedItems[index].unit_cost),
+                    quantity: parseInt(editedItems[index].quantity, 10)
+                };
+            }
+            return item;
+        });
+    
+        // Log the data being sent to check its format
+        console.log("Sending updated items:", JSON.stringify(updatedItems, null, 2));
+    
+        try {
+            const response = await axios.post(
+                `http://localhost:8000/purchase-requests/${requestId}/`, 
+                { items: updatedItems },
+                { headers: { Authorization: `Token ${sessionStorage.getItem('token')}` } }
+            );
+    
+            // Update the local state with the response data
+            setPurchaseRequest({ ...purchaseRequest, items: response.data.items });
+            setEditItemIndex(null);
+            setEditedItems({});
+            alert('All items updated successfully');
+        } catch (error) {
+            console.error('Error updating items:', error);
+            setError('Failed to update the items. Details: ' + (error.response?.data || error.message));
+        }
+    };
+    const handleCancel = (index) => {
+        setEditItemIndex(null);
+        delete editedItems[index];
+        setEditedItems({ ...editedItems });
+    };
+
+    if (!purchaseRequest) {
+        return <div>Loading...</div>;
+    }
+
+
+    // useEffect(() => {
+    //     const fetchPurchaseRequestAndUser = async () => {
+    //         const token = sessionStorage.getItem('token');
+    //         try {
+    //             const [prResponse, userResponse] = await Promise.all([
+    //                 axios.get(`http://localhost:8000/purchase-requests/${requestId}/`, {
+    //                     headers: { Authorization: `Token ${token}` },
+    //                 }),
+    //                 axios.get('http://localhost:8000/current-user/', {
+    //                     headers: { Authorization: `Token ${token}` },
+    //                 })
+    //             ]);
+    //             setPurchaseRequest(prResponse.data);
+    //             setCurrentUser({ username: userResponse.data.username, userType: userResponse.data.user_type });
+    //         } catch (error) {
+    //             console.error('Error fetching data:', error);
+    //             setError('Failed to load purchase request or user data');
+    //         }
+    //     };
+    
+    //     fetchPurchaseRequestAndUser();
+    // }, [requestId]);
+
     const handleApprove = async () => {
         try {
             await axios.post(`http://localhost:8000/purchase-requests/${requestId}/approve/`, {}, {
@@ -78,57 +158,64 @@ const PurchaseRequestDetail = () => {
             setError('Failed to reject the purchase request');
         }
     };
-    const handleEdit = (index) => {
-        setEditItemIndex(index);
-        const item = purchaseRequest.items[index];
-        setEditedItems({
-            ...editedItems,
-            [index]: { ...item }
-        });
-    };
+    // const handleEdit = (index) => {
+    //     setEditItemIndex(index);
+    //     const item = purchaseRequest.items[index];
+    //     setEditedItems({
+    //         ...editedItems,
+    //         [index]: { ...item }
+    //     });
+    // };
 
-    const handleChange = (index, field, value) => {
-        setEditedItems({
-            ...editedItems,
-            [index]: {
-                ...editedItems[index],
-                [field]: value
-            }
-        });
-    };
+    // const handleChange = (index, field, value) => {
+    //     setEditedItems({
+    //         ...editedItems,
+    //         [index]: {
+    //             ...editedItems[index],
+    //             [field]: value
+    //         }
+    //     });
+    // };
 
-    const handleSave = async (index) => {
-        const item = editedItems[index];
-        // Call your API to update the item
-        try {
-            await axios.patch(`http://localhost:8000/items/${item.id}/`, item, {
-                headers: { Authorization: `Token ${sessionStorage.getItem('token')}` },
-            });
-            // Update local state to reflect the saved changes
-            let updatedItems = [...purchaseRequest.items];
-            updatedItems[index] = item;
-            setPurchaseRequest({ ...purchaseRequest, items: updatedItems });
-            // Reset edit state
-            setEditItemIndex(null);
-            setEditedItems({});
-        } catch (error) {
-            console.error('Error updating item:', error);
-            // Handle error (e.g., display an error message)
-        }
-    };
+    // const handleSave= async (itemIndex) => {
+    //     const item = editedItems[itemIndex];
+    //     try {
+    //         const response = await axios.patch(`http://localhost:8000/items/${item.id}/`, item, {
+    //             headers: { Authorization: `Token ${sessionStorage.getItem('token')}` },
+    //         });
+    
+    //         // Update your local state with the response data to reflect changes
+    //         const updatedItems = [...purchaseRequest.items];
+    //         updatedItems[itemIndex] = response.data;
+    //         setPurchaseRequest({ ...purchaseRequest, items: updatedItems });
+    
+    //         // Reset edited item state
+    //         setEditItemIndex(null);
+    //         setEditedItems({ ...editedItems, [itemIndex]: undefined });
+    
+    //         alert('Item updated successfully');
+    //     } catch (error) {
+    //         if (error.response && error.response.status === 400) {
+    //             console.error('Bad Request:', error.response.data);
+    //             alert(`Error: ${JSON.stringify(error.response.data)}`);
+    //         } else {
+    //             // Handle other errors...
+    //         }
+    //     }
+    // };
 
-    const handleCancel = (index) => {
-        setEditItemIndex(null);
-        // Optionally revert edited item to original
-        const originalItem = purchaseRequest.items[index];
-        setEditedItems({
-            ...editedItems,
-            [index]: { ...originalItem }
-        });
-    };
-    if (!purchaseRequest) {
-        return <div>Loading...</div>;
-    }
+    // const handleCancel = (index) => {
+    //     setEditItemIndex(null);
+    //     // Optionally revert edited item to original
+    //     const originalItem = purchaseRequest.items[index];
+    //     setEditedItems({
+    //         ...editedItems,
+    //         [index]: { ...originalItem }
+    //     });
+    // };
+    // if (!purchaseRequest) {
+    //     return <div>Loading...</div>;
+    // }
 
     const canApproveOrReject = currentUser.userType === 'budget_holder' || currentUser.userType === 'finance_checker';
 
@@ -211,7 +298,7 @@ const PurchaseRequestDetail = () => {
                                         <td><Input type="text" value={editedItems[index].budget_line} onChange={(e) => handleChange(index, 'budget_line', e.target.value)} /></td>
                                         <td><Input type="text" value={editedItems[index].comments} onChange={(e) => handleChange(index, 'comments', e.target.value)} /></td>
                                         <td>
-                                            <Button color="success" onClick={() => handleSave(index)}>Save</Button>
+                                            
                                             <Button color="secondary" onClick={() => handleCancel(index)}>Cancel</Button>
                                         </td>
                                     </>
@@ -231,8 +318,10 @@ const PurchaseRequestDetail = () => {
                                     </>
                                 )}
                             </tr>
+                            
                         ))}
                     </tbody>
+                    <Button color="success" onClick={handleSaveAll}>Save All</Button>
                     </Table>
                     {canApproveOrReject && (
                         <div>
